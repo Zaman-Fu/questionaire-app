@@ -8,20 +8,32 @@ const Question = () => {
 
     const [formAnswer, setAnswer] = useState("");
     const [formPointer, setPointer] = useState(0);
+    const [isloaded, SetLoaded] = useState(false);
 
+    var questions;
+    var qMap;
+    let key;
+    let qEntry ;
     //This will be a fetch from the server
+
+    var config = {
+        headers: { 'Access-Control-Allow-Origin': '*' }
+    };
     axios({
         method: 'get',
-        url: 'localhost:7076/api/Question',
-        responseType: 'json';
-    })
+        url: 'https://localhost:7076/api/Question',
+        responseType: 'json'
+    },config)
         .then(function (response) {
-            const questions = response.data;
+            console.log(response.data);
+             questions = response.data;
 
-            const qMap = new Map(Object.entries(questions));
-            let key = Array.from(qMap.keys())[formPointer];
-            console.log(qMap.get(key));
-            let qEntry = qMap.get(key);
+             qMap = new Map(Object.entries(questions));
+             key = Array.from(qMap.keys())[formPointer];
+            
+            qEntry = qMap.get(key);
+
+            SetLoaded(true);
         })
    /* const questions =
         [
@@ -92,30 +104,33 @@ const Question = () => {
     };
 
     //We want to dynamically add :1. the question text and 2. The answer options in the dropdown select.
-    return (
-        <div className="formdiv">
-            <p>Input email to proceed to questions</p>
+    if (isloaded) {
+        return (
+            <div className="formdiv">
+                <p>Input email to proceed to questions</p>
 
-            <form className="signin-form" onSubmit={submitHandler}>
+                <form className="signin-form" onSubmit={submitHandler}>
 
-                <label >{qEntry.questionText}</label>
-                <select className="options" id="options" name="options" onChange={answerChangeHandler}>
-                    {qEntry.answerText.map((data, key) => {
-                        return (
-                            <option value={data.option}>{data.option}</option>
-                        );
-                    } )}
-                </select>
-                <input type="submit" value="Submit" onSubmit={submitHandler}></input>
-
-
-            </form>
+                    <label >{qEntry.questionText}</label>
+                    <select className="options" id="options" name="options" onChange={answerChangeHandler}>
+                        {qEntry.answerText.map((data, key) => {
+                            return (
+                                <option value={data.option}>{data.option}</option>
+                            );
+                        })}
+                    </select>
+                    <input type="submit" value="Submit" onSubmit={submitHandler}></input>
 
 
-        </div>
+                </form>
 
 
-    );
+            </div>
+
+
+        );
+    }
+    else { return <div>Loading Question</div> }
 }
 
 
