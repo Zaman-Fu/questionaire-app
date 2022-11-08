@@ -1,5 +1,6 @@
 //import './UserSignIn.css';
 import React, { useState, useEffect } from "react";
+import '../styles/question.css';
 
 import axios from "../../node_modules/axios/index";
 
@@ -55,7 +56,7 @@ const Question = (props) => {
       url: "https://localhost:7076/api/UserAnswer",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*" 
+        "Access-Control-Allow-Origin": "*",
       },
       data: data,
     };
@@ -88,10 +89,13 @@ const Question = (props) => {
     return (
       <div className="formdiv" id="questionsId">
         <form className="signin-form" onSubmit={handleQuestionSubmit}>
-          <label>{questions[formPointer].questionText}</label>
+          <label>
+            <h1 class="display-3 margins">{questions[formPointer].questionText}</h1>
+            
+          </label>
+          <div className="margins">
           <select
-            className="options"
-            id="options"
+            class="form-select" id="floatingSelectGrid"
             name="options"
             onChange={answerChangeHandler}
           >
@@ -99,7 +103,8 @@ const Question = (props) => {
               <option value={a.option}>{a.option}</option>
             ))}
           </select>
-          <input type="submit" value="Submit"></input>
+          <input type="submit" class="btn btn-primary" value="Submit"></input>
+          </div>
         </form>
       </div>
     );
