@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 const Question = () => {
 
     const [formAnswer, setAnswer] = useState("");
-    const [formPointer, setPointer] = useState(1);
+    const [formPointer, setPointer] = useState(0);
 
     const questions =
         [
@@ -57,7 +57,9 @@ const Question = () => {
     }
     const submitHandler = (event) => {
         event.preventDefault();//avoid page reload to handle this request with javascript
-        setPointer(formPointer++);
+
+        setPointer(formPointer+1);
+
         console.log('Answer Submission!');
 
     };
