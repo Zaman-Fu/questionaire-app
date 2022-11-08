@@ -1,7 +1,8 @@
 //import './UserSignIn.css';
 import React, { useState } from "react";
+import axios from "../../node_modules/axios/index";
 
-const UserSignIn = () => {
+const UserSignIn = (props) => {
   const [formEmail, setEmail] = useState("");
 
   const emailChangeHandler = (event) => {
@@ -10,9 +11,31 @@ const UserSignIn = () => {
   const submitHandler = (event) => {
     event.preventDefault(); //avoid page reload to handle this request with javascript
     //Now sign the user in.
-    console.log("Form Submission!");
+      let userData = {
+          email:formEmail
+      }
+      console.log("Form Submission!");
+      //Axios post function, and redirect ONLY if and after the post has successfully completed
+      //configure connection
+      let config = {
+          method: 'post',
+          url: 'https://localhost:7076/api/User',
+          responseType: 'json',
+          headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*"
+          },
+          data: userData,
+      }
 
-    window.location = "/questions";
+      axios(config)
+          .then((response) => {
+
+              props.onSuccessfulUserLogin(response.data);
+
+          }).then(() => { window.location = "/questions"; });
+
+    
   };
 
   return (
