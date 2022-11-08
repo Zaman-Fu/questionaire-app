@@ -1,5 +1,6 @@
 //import './UserSignIn.css';
 import React, { useState } from 'react';
+import axios from '../../node_modules/axios/index';
 
 
 
@@ -8,7 +9,21 @@ const Question = () => {
     const [formAnswer, setAnswer] = useState("");
     const [formPointer, setPointer] = useState(0);
 
-    const questions =
+    //This will be a fetch from the server
+    axios({
+        method: 'get',
+        url: 'localhost:7076/api/Question',
+        responseType: 'json';
+    })
+        .then(function (response) {
+            const questions = response.data;
+
+            const qMap = new Map(Object.entries(questions));
+            let key = Array.from(qMap.keys())[formPointer];
+            console.log(qMap.get(key));
+            let qEntry = qMap.get(key);
+        })
+   /* const questions =
         [
             {
                 id: "0",
@@ -46,19 +61,31 @@ const Question = () => {
 
                 ]
             }
-        ]
-    const qMap = new Map(Object.entries(questions));
+        ];*/
+    /*const qMap = new Map(Object.entries(questions));
     let key = Array.from(qMap.keys())[formPointer];
     console.log(qMap.get(key));
-    let qEntry = qMap.get(key);
+    let qEntry = qMap.get(key);*/
 
     const answerChangeHandler = (event) => {
         setAnswer(event.target.value);
     }
     const submitHandler = (event) => {
         event.preventDefault();//avoid page reload to handle this request with javascript
+        //send post request with answer
 
-        setPointer(formPointer+1);
+
+        //Check if formPointer has caught up to size 
+        if (qMap.size > formPointer + 1) {
+
+            setPointer(formPointer + 1);
+        }else
+        {
+           //set up for redirecting to a success screen
+
+        }
+        
+       
 
         console.log('Answer Submission!');
 
