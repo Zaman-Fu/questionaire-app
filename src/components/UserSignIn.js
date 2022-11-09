@@ -1,11 +1,13 @@
 //import './UserSignIn.css';
 import React, { useState } from "react";
 import axios from "../../node_modules/axios/index";
+import loggedUserObject from "../global/loggedUser";
 import "../styles/question.css";
 
 const UserSignIn = (props) => {
   const [formEmail, setEmail] = useState("");
 
+    
   const emailChangeHandler = (event) => {
     setEmail(event.target.value);
   };
@@ -29,13 +31,13 @@ const UserSignIn = (props) => {
       data: userData,
     };
 
-    axios(config)
-      .then((response) => {
-        props.onSuccessfulUserLogin(response.data);
-      })
-      .then(() => {
-        window.location = "/questions";
-      });
+      axios(config)
+          .then((response) => {
+              loggedUserObject = response.data;
+
+          }).then(() => { window.location = "/questions"; });
+
+    
   };
 
   return (
