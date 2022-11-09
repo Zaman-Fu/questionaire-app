@@ -5,21 +5,21 @@ import Question from "./components/Question";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
-
-    var currentlyLoggedUser = null;
-    const userLoginHandler = (loggedUser) =>
-    {
-        currentlyLoggedUser = loggedUser;
-        console.log(currentlyLoggedUser);
-    }
-
+  var currentlyLoggedUser = null;
+  const userLoginHandler = (loggedUser) => {
+    currentlyLoggedUser = loggedUser;
+    console.log(currentlyLoggedUser);
+  };
 
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-                  <Route path="*" element={<UserSignIn onSuccessfulUserLogin={userLoginHandler} />} />
-          <Route path="/questions" element={<Question />} />
+          <Route
+            path="*"
+            element={<UserSignIn onSuccessfulUserLogin={userLoginHandler} />}
+          />
+          <Route path="/questions" element={<Question currentlyLoggedUser={currentlyLoggedUser}/>} />
         </Routes>
       </BrowserRouter>
     </div>
