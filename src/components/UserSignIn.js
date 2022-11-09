@@ -32,9 +32,12 @@ const UserSignIn = (props) => {
 
       axios(config)
           .then((response) => {
-              loggedUserObject = response.data;
 
-          }).then(() => { window.location = "/questions"; });
+              //window.currentUser = response.data;
+              //console.log(window.currentUser);
+              window.location = `/questions/?id=${response.data.id}`;
+
+          }).then(() => {/* window.location = "/questions";*/ });
 
     
   };

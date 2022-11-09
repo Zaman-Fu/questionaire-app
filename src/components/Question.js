@@ -1,5 +1,6 @@
 //import './UserSignIn.css';
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import '../styles/question.css';
 import axios from "../../node_modules/axios/index";
 
@@ -7,8 +8,11 @@ const Question = (props) => {
   const [formAnswer, setAnswer] = useState("");
   const [formPointer, setPointer] = useState(0);
   const [isloaded, SetLoaded] = useState(false);
-  const [questions, SetQuestions] = useState(null);
+    const [questions, SetQuestions] = useState(null);
+    const [searchParams, setSearchParams] = useSearchParams();
 
+    
+    console.log("current user id is:" + searchParams.get("id"));
 
   //var questions;
   var qMap;
@@ -46,7 +50,7 @@ const Question = (props) => {
     event.preventDefault();
 
     var data = JSON.stringify({
-      userId: 1,
+        userId: searchParams.get("id"),
       questionId: questions[formPointer].id,
       answer: formAnswer,
     });
