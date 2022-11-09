@@ -9,8 +9,7 @@ const Question = (props) => {
   const [isloaded, SetLoaded] = useState(false);
   const [questions, SetQuestions] = useState(null);
 
-    //Debug line, delete later
-    console.log("Current User is:"+loggedUserObject);
+
   //var questions;
   var qMap;
   var key;
