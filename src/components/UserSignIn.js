@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import axios from "../../node_modules/axios/index";
 import loggedUserObject from "../global/loggedUser";
+import "../styles/question.css";
 
 const UserSignIn = (props) => {
   const [formEmail, setEmail] = useState("");
@@ -13,22 +14,22 @@ const UserSignIn = (props) => {
   const submitHandler = (event) => {
     event.preventDefault(); //avoid page reload to handle this request with javascript
     //Now sign the user in.
-      let userData = {
-          email:formEmail
-      }
-      console.log("Form Submission!");
-      //Axios post function, and redirect ONLY if and after the post has successfully completed
-      //configure connection
-      let config = {
-          method: 'post',
-          url: 'https://localhost:7076/api/User',
-          responseType: 'json',
-          headers: {
-              "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "*"
-          },
-          data: userData,
-      }
+    let userData = {
+      email: formEmail,
+    };
+    console.log("Form Submission!");
+    //Axios post function, and redirect ONLY if and after the post has successfully completed
+    //configure connection
+    let config = {
+      method: "post",
+      url: "https://localhost:7076/api/User",
+      responseType: "json",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: userData,
+    };
 
       axios(config)
           .then((response) => {
@@ -44,16 +45,30 @@ const UserSignIn = (props) => {
 
   return (
     <div className="formdiv">
-      <p>Input email to proceed to questions</p>
+      <label>
+        <h4 class="display-5 margins">Input email to proceed to questions</h4>
+      </label>
       <form className="signin-form" onSubmit={submitHandler}>
-        <label>Email:</label>
+
+        <div class="col-md">
+          <div class="form-floating margins">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInputGrid"
+              placeholder="name@example.com"
+              onChange={emailChangeHandler}
+            />
+            <label for="floatingInputGrid">Email address</label>
+          </div>
+        </div>
+
         <input
-          type="text"
-          id="email"
-          name="email"
-          onChange={emailChangeHandler}
+          type="submit"
+          value="Submit"
+          className="btn btn-primary"
+          onSubmit={submitHandler}
         ></input>
-        <input type="submit" value="Submit" onSubmit={submitHandler}></input>
       </form>
     </div>
   );

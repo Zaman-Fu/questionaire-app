@@ -21,8 +21,11 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-                  <Route path="*" element={<UserSignIn  />} />
-                  <Route path="/questions" element={<Question  />} />
+          <Route
+            path="*"
+            element={<UserSignIn onSuccessfulUserLogin={userLoginHandler} />}
+          />
+          <Route path="/questions" element={<Question currentlyLoggedUser={currentlyLoggedUser}/>} />
         </Routes>
       </BrowserRouter>
     </div>
