@@ -1,6 +1,6 @@
 //import './UserSignIn.css';
 import React, { useState, useEffect } from "react";
-
+import loggedUserObject from "../global/loggedUser";
 import axios from "../../node_modules/axios/index";
 
 const Question = (props) => {
@@ -9,6 +9,8 @@ const Question = (props) => {
   const [isloaded, SetLoaded] = useState(false);
   const [questions, SetQuestions] = useState(null);
 
+    //Debug line, delete later
+    console.log("Current User is:"+loggedUserObject);
   //var questions;
   var qMap;
   var key;
